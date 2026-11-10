@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +9,20 @@
   <title>CropNet — Crop & weather explorer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <div class="app-shell">
     <aside class="sidebar" id="sidebar">
       <a class="brand" href="#overview" aria-label="CropNet home">
-        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M25.7 5.4C15 5.7 7.2 9.3 7.2 17.4c0 3.9 2.7 6.4 6.2 6.4 7.6 0 12-8.1 12.3-18.4Z"/><path d="M5.2 27.1c4-7.7 9.1-12.4 16.4-16.2"/></svg></span>
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32">
+            <path d="M25.7 5.4C15 5.7 7.2 9.3 7.2 17.4c0 3.9 2.7 6.4 6.2 6.4 7.6 0 12-8.1 12.3-18.4Z" />
+            <path d="M5.2 27.1c4-7.7 9.1-12.4 16.4-16.2" />
+          </svg></span>
         <span class="brand-name">crop<span>net</span></span>
       </a>
       <div class="workspace-label">MENU</div>
@@ -27,10 +34,10 @@
         <a class="nav-link" href="#method"><span class="nav-icon">◉</span>How it works</a>
       </nav>
       <div class="sidebar-bottom">
-        <div class="status-card">
+        <!-- <div class="status-card">
           <span class="status-dot"></span>
-          <!-- <div><strong>Project demo</strong><small>Example data only</small></div> -->
-        </div>
+          <div><strong>Project demo</strong><small>Example data only</small></div>
+        </div> -->
         <div class="profile">
           <div class="avatar">CN</div>
           <div><strong>CropNet project</strong><small>Field research</small></div>
@@ -43,7 +50,8 @@
       <header class="topbar">
         <button class="menu-button" id="menu-button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
         <div class="breadcrumb">Workspace <span>/</span> <strong>Overview</strong></div>
-        <div class="topbar-right"><span class="live-pill"><i></i> EXAMPLE MODE</span><button class="help-button" aria-label="About this demo" id="about-button">?</button></div>
+        <div class="topbar-right"><span class="live-pill"><i></i> EXAMPLE MODE</span><button class="help-button"
+            aria-label="About this demo" id="about-button">?</button></div>
       </header>
 
       <div class="page-wrap">
@@ -51,28 +59,35 @@
           <div>
             <div class="eyebrow"><span class="eyebrow-line"></span> CROPS, WEATHER & YIELD</div>
             <h1>Understand the season.<br class="mobile-break"> <em>Explore the data.</em></h1>
-            <p class="welcome-copy">Try simple crop and weather examples, see the results saved in the project notebook, and learn what those results can—and cannot—tell you.</p>
+            <p class="welcome-copy">Try simple crop and weather examples, see the results saved in the project notebook,
+              and learn what those results can—and cannot—tell you.</p>
           </div>
           <a class="primary-button" href="#explorer"><span>＋</span> Try an example</a>
         </section>
 
         <section class="metric-grid" aria-label="Project at a glance">
           <article class="metric-card">
-            <div class="metric-top"><span class="metric-icon green-icon">⌁</span><span class="metric-tag">DATA SOURCES</span></div>
+            <div class="metric-top"><span class="metric-icon green-icon">⌁</span><span class="metric-tag">DATA
+                SOURCES</span></div>
             <div class="metric-value">03</div>
             <div class="metric-label">Three kinds of information</div>
             <div class="metric-note">Satellite pictures · weather · crop yield</div>
-            <div class="mini-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="mini-bars" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
           </article>
           <article class="metric-card">
-            <div class="metric-top"><span class="metric-icon amber-icon">◷</span><span class="metric-tag">DATA IN EACH SAMPLE</span></div>
+            <div class="metric-top"><span class="metric-icon amber-icon">◷</span><span class="metric-tag">DATA IN EACH
+                SAMPLE</span></div>
             <div class="metric-value">6 <span class="metric-unit">frames</span></div>
             <div class="metric-label">Satellite pictures per sample</div>
             <div class="metric-note">12 months of weather · 9 measurements</div>
-            <div class="metric-sparkline" aria-hidden="true"><svg viewBox="0 0 160 32"><path d="M2 25 C16 22 17 10 31 16 S48 26 60 14 79 8 89 17 107 27 119 11 139 8 158 3"/></svg></div>
+            <div class="metric-sparkline" aria-hidden="true"><svg viewBox="0 0 160 32">
+                <path d="M2 25 C16 22 17 10 31 16 S48 26 60 14 79 8 89 17 107 27 119 11 139 8 158 3" />
+              </svg></div>
           </article>
           <article class="metric-card">
-            <div class="metric-top"><span class="metric-icon blue-icon">⌘</span><span class="metric-tag">PROJECT MODEL</span></div>
+            <div class="metric-top"><span class="metric-icon blue-icon">⌘</span><span class="metric-tag">PROJECT
+                MODEL</span></div>
             <div class="metric-value model-value">Images <span>+</span> weather</div>
             <div class="metric-label">Looks for patterns over time</div>
             <div class="metric-note">Compared with a second model</div>
@@ -83,34 +98,63 @@
         <section class="dashboard-grid">
           <article class="panel trend-panel">
             <div class="panel-heading">
-              <div><div class="section-kicker">EXAMPLE CHART</div><h2>How crops and weather change</h2></div>
+              <div>
+                <div class="section-kicker">EXAMPLE CHART</div>
+                <h2>How crops and weather change</h2>
+              </div>
               <span class="sample-chip"><i></i> Made-up example</span>
             </div>
-            <p class="panel-description">These lines only show the kinds of changes the project studies. They are not real farm or weather readings.</p>
-            <div class="chart-legend"><span><i class="legend-green"></i> Plant greenness</span><span><i class="legend-orange"></i> Change in temperature</span></div>
+            <p class="panel-description">These lines only show the kinds of changes the project studies. They are not
+              real farm or weather readings.</p>
+            <div class="chart-legend"><span><i class="legend-green"></i> Plant greenness</span><span><i
+                  class="legend-orange"></i> Change in temperature</span></div>
             <div class="chart-wrap">
               <div class="y-axis"><span>High</span><span>Mid</span><span>Low</span></div>
-              <svg class="trend-chart" viewBox="0 0 700 190" preserveAspectRatio="none" role="img" aria-label="Illustrative seasonal trend chart">
-                <defs><linearGradient id="area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#4c8b62" stop-opacity=".18"/><stop offset="1" stop-color="#4c8b62" stop-opacity="0"/></linearGradient></defs>
-                <path class="gridline" d="M0 25H700M0 75H700M0 125H700M0 175H700"/>
-                <path class="area-path" d="M0 158 C45 150 55 130 100 137 S155 125 190 108 245 92 280 97 330 78 375 69 425 72 470 53 520 45 560 49 620 27 700 20 V180 H0Z"/>
-                <path class="line-green" d="M0 158 C45 150 55 130 100 137 S155 125 190 108 245 92 280 97 330 78 375 69 425 72 470 53 520 45 560 49 620 27 700 20"/>
-                <path class="line-orange" d="M0 125 C40 139 62 126 100 117 S160 137 190 124 250 116 280 128 340 107 375 111 432 120 470 104 525 118 560 101 625 109 700 83"/>
-                <circle cx="560" cy="49" r="4" class="chart-point"/>
+              <svg class="trend-chart" viewBox="0 0 700 190" preserveAspectRatio="none" role="img"
+                aria-label="Illustrative seasonal trend chart">
+                <defs>
+                  <linearGradient id="area" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0" stop-color="#4c8b62" stop-opacity=".18" />
+                    <stop offset="1" stop-color="#4c8b62" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+                <path class="gridline" d="M0 25H700M0 75H700M0 125H700M0 175H700" />
+                <path class="area-path"
+                  d="M0 158 C45 150 55 130 100 137 S155 125 190 108 245 92 280 97 330 78 375 69 425 72 470 53 520 45 560 49 620 27 700 20 V180 H0Z" />
+                <path class="line-green"
+                  d="M0 158 C45 150 55 130 100 137 S155 125 190 108 245 92 280 97 330 78 375 69 425 72 470 53 520 45 560 49 620 27 700 20" />
+                <path class="line-orange"
+                  d="M0 125 C40 139 62 126 100 117 S160 137 190 124 250 116 280 128 340 107 375 111 432 120 470 104 525 118 560 101 625 109 700 83" />
+                <circle cx="560" cy="49" r="4" class="chart-point" />
               </svg>
             </div>
             <div class="x-axis"><span>Start of season</span><span>Middle</span><span>End of season</span></div>
-            <div class="chart-footnote"><span class="footnote-mark">i</span> The project pairs satellite pictures with monthly weather readings.</div>
+            <div class="chart-footnote"><span class="footnote-mark">i</span> The project pairs satellite pictures with
+              monthly weather readings.</div>
           </article>
 
           <article class="panel recipe-panel">
-            <div class="panel-heading"><div><div class="section-kicker">HOW THE PROJECT WORKS</div><h2>From data to results</h2></div></div>
+            <div class="panel-heading">
+              <div>
+                <div class="section-kicker">HOW THE PROJECT WORKS</div>
+                <h2>From data to results</h2>
+              </div>
+            </div>
             <div class="pipeline">
-              <div class="pipeline-step"><span class="step-number">01</span><span class="step-icon satellite-icon">◉</span><div><strong>Look at crops</strong><small>Satellite pictures<br>Plant greenness</small></div></div>
+              <div class="pipeline-step"><span class="step-number">01</span><span
+                  class="step-icon satellite-icon">◉</span>
+                <div><strong>Look at crops</strong><small>Satellite pictures<br>Plant greenness</small></div>
+              </div>
               <div class="pipeline-connector"></div>
-              <div class="pipeline-step"><span class="step-number">02</span><span class="step-icon climate-icon">〰</span><div><strong>Check the weather</strong><small>Monthly weather<br>temperature, rain &amp; more</small></div></div>
+              <div class="pipeline-step"><span class="step-number">02</span><span
+                  class="step-icon climate-icon">〰</span>
+                <div><strong>Check the weather</strong><small>Monthly weather<br>temperature, rain &amp; more</small>
+                </div>
+              </div>
               <div class="pipeline-connector"></div>
-              <div class="pipeline-step"><span class="step-number">03</span><span class="step-icon yield-icon">↗</span><div><strong>Compare with harvests</strong><small>County crop yields<br>Three yield groups</small></div></div>
+              <div class="pipeline-step"><span class="step-number">03</span><span class="step-icon yield-icon">↗</span>
+                <div><strong>Compare with harvests</strong><small>County crop yields<br>Three yield groups</small></div>
+              </div>
             </div>
             <a class="text-link" href="#method">See how it works <span>→</span></a>
           </article>
@@ -118,136 +162,329 @@
 
         <section class="experiment-section" id="experiment-results">
           <div class="experiment-heading">
-            <div><div class="section-kicker">RESULTS FROM THE NOTEBOOK</div><h2>How did the models do?</h2><p>These numbers were already in the notebook. This website did not train or run the models.</p></div>
+            <div>
+              <div class="section-kicker">RESULTS FROM THE NOTEBOOK</div>
+              <h2>How did the models do?</h2>
+              <p>These numbers were already in the notebook. This website did not train or run the models.</p>
+            </div>
             <span class="synthetic-tag"><i></i> TESTED WITH MADE-UP DATA</span>
           </div>
-          <div class="data-warning"><span>!</span><p><strong>Important: these results are not from real farms.</strong> The project could not load real weather data because a required program was missing, so it used computer-generated examples instead. The notebook still needs work before it can process real data. Do not use these numbers to make farming decisions.</p></div>
+          <div class="data-warning"><span>!</span>
+            <p><strong>Important: these results are not from real farms.</strong> The project could not load real
+              weather data because a required program was missing, so it used computer-generated examples instead. The
+              notebook still needs work before it can process real data. Do not use these numbers to make farming
+              decisions.</p>
+          </div>
           <div class="benchmark-grid">
             <article class="benchmark-card">
-              <div class="benchmark-title"><div><span class="section-kicker">SORTING YIELDS · TEST EXAMPLES</span><h3>Putting yields into 3 groups</h3></div><span class="unit-chip">Low · Medium · High</span></div>
-              <div class="table-scroll"><table class="results-table"><thead><tr><th>Method</th><th title="Share of test examples assigned to the correct group">Correct answers</th><th title="Shows whether it performed evenly across the three groups; closer to 1 is better">Across all groups</th><th title="Shows how well it told the groups apart; closer to 1 is better">Telling groups apart</th></tr></thead><tbody>
-                <tr><th>Image + weather model</th><td>78.3%</td><td>0.783</td><td>0.942</td></tr>
-                <tr class="best-row"><th>Second model</th><td>88.3%</td><td>0.884</td><td>0.955</td></tr>
-              </tbody></table></div>
-              <details class="metric-help"><summary>What do these scores mean?</summary><p><strong>Correct answers</strong> is the share of examples put in the right group. The next two scores show whether it did well across all groups and told groups apart. For those scores, closer to 1 is better.</p></details>
+              <div class="benchmark-title">
+                <div><span class="section-kicker">SORTING YIELDS · TEST EXAMPLES</span>
+                  <h3>Putting yields into 3 groups</h3>
+                </div><span class="unit-chip">Low · Medium · High</span>
+              </div>
+              <div class="table-scroll">
+                <table class="results-table">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th title="Share of test examples assigned to the correct group">Correct answers</th>
+                      <th title="Shows whether it performed evenly across the three groups; closer to 1 is better">
+                        Across all groups</th>
+                      <th title="Shows how well it told the groups apart; closer to 1 is better">Telling groups apart
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>Image + weather model</th>
+                      <td>78.3%</td>
+                      <td>0.783</td>
+                      <td>0.942</td>
+                    </tr>
+                    <tr class="best-row">
+                      <th>Second model</th>
+                      <td>88.3%</td>
+                      <td>0.884</td>
+                      <td>0.955</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <details class="metric-help">
+                <summary>What do these scores mean?</summary>
+                <p><strong>Correct answers</strong> is the share of examples put in the right group. The next two scores
+                  show whether it did well across all groups and told groups apart. For those scores, closer to 1 is
+                  better.</p>
+              </details>
               <p class="benchmark-note">The tree model got more examples right in this generated-data test.</p>
             </article>
             <article class="benchmark-card">
-              <div class="benchmark-title"><div><span class="section-kicker">ESTIMATING YIELD · TEST EXAMPLES</span><h3>How close were yield estimates?</h3></div><span class="unit-chip">Notebook's units</span></div>
-              <div class="table-scroll"><table class="results-table"><thead><tr><th>Method</th><th title="Average distance between estimates and answers; lower is better">Average miss ↓</th><th title="Highlights bigger mistakes; lower is better">Big misses ↓</th><th title="How closely estimates follow the answers; closer to 1 is better">How well it fits ↑</th></tr></thead><tbody>
-                <tr><th>Image + weather model</th><td>2.603</td><td>3.441</td><td>0.886</td></tr>
-                <tr><th>Another model</th><td>2.689</td><td>3.300</td><td>0.895</td></tr>
-              </tbody></table></div>
-              <details class="metric-help"><summary>How should I read this?</summary><p>The first number is the average error: 2.603 is lower than 2.689. The other model did better on the large-error score and fit score. The notebook does not give the yield unit in this table.</p></details>
-              <p class="benchmark-note">Neither method did best on every measure. These are not real yield estimates.</p>
+              <div class="benchmark-title">
+                <div><span class="section-kicker">ESTIMATING YIELD · TEST EXAMPLES</span>
+                  <h3>How close were yield estimates?</h3>
+                </div><span class="unit-chip">Notebook's units</span>
+              </div>
+              <div class="table-scroll">
+                <table class="results-table">
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th title="Average distance between estimates and answers; lower is better">Average miss ↓</th>
+                      <th title="Highlights bigger mistakes; lower is better">Big misses ↓</th>
+                      <th title="How closely estimates follow the answers; closer to 1 is better">How well it fits ↑
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>Image + weather model</th>
+                      <td>2.603</td>
+                      <td>3.441</td>
+                      <td>0.886</td>
+                    </tr>
+                    <tr>
+                      <th>Another model</th>
+                      <td>2.689</td>
+                      <td>3.300</td>
+                      <td>0.895</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <details class="metric-help">
+                <summary>How should I read this?</summary>
+                <p>The first number is the average error: 2.603 is lower than 2.689. The other model did better on the
+                  large-error score and fit score. The notebook does not give the yield unit in this table.</p>
+              </details>
+              <p class="benchmark-note">Neither method did best on every measure. These are not real yield estimates.
+              </p>
             </article>
           </div>
           <article class="ablation-card">
-            <div class="benchmark-title"><div><span class="section-kicker">A CLOSER LOOK AT THE INPUTS</span><h3>Which information helped most?</h3></div><span class="unit-chip">Correct group answers</span></div>
-            <div class="ablation-bars" role="img" aria-label="Correct group answers: satellite pictures only 83.3 percent, weather only 68.3 percent, pictures and weather 78.3 percent, second method 88.3 percent">
-              <div class="ablation-row"><span>Satellite pictures only</span><div class="ablation-track"><i style="width:83.3%"></i></div><strong>83.3%</strong></div>
-              <div class="ablation-row"><span>Weather readings only</span><div class="ablation-track"><i style="width:68.3%"></i></div><strong>68.3%</strong></div>
-              <div class="ablation-row"><span>Pictures + weather</span><div class="ablation-track"><i style="width:78.3%"></i></div><strong>78.3%</strong></div>
-              <div class="ablation-row"><span>Second model</span><div class="ablation-track"><i class="baseline-bar" style="width:88.3%"></i></div><strong>88.3%</strong></div>
+            <div class="benchmark-title">
+              <div><span class="section-kicker">A CLOSER LOOK AT THE INPUTS</span>
+                <h3>Which information helped most?</h3>
+              </div><span class="unit-chip">Correct group answers</span>
+            </div>
+            <div class="ablation-bars" role="img"
+              aria-label="Correct group answers: satellite pictures only 83.3 percent, weather only 68.3 percent, pictures and weather 78.3 percent, second method 88.3 percent">
+              <div class="ablation-row"><span>Satellite pictures only</span>
+                <div class="ablation-track"><i style="width:83.3%"></i></div><strong>83.3%</strong>
+              </div>
+              <div class="ablation-row"><span>Weather readings only</span>
+                <div class="ablation-track"><i style="width:68.3%"></i></div><strong>68.3%</strong>
+              </div>
+              <div class="ablation-row"><span>Pictures + weather</span>
+                <div class="ablation-track"><i style="width:78.3%"></i></div><strong>78.3%</strong>
+              </div>
+              <div class="ablation-row"><span>Second model</span>
+                <div class="ablation-track"><i class="baseline-bar" style="width:88.3%"></i></div><strong>88.3%</strong>
+              </div>
             </div>
           </article>
-          <div class="experiment-footnote">The notebook tested on 60 generated examples from two counties. The values above are copied from its saved results.</div>
+          <div class="experiment-footnote">The notebook tested on 60 generated examples from two counties. The values
+            above are copied from its saved results.</div>
         </section>
 
         <section class="explorer-section" id="explorer">
           <div class="explorer-intro">
             <div class="section-kicker">TRY YOUR OWN EXAMPLE</div>
             <h2>What if the weather changes?</h2>
-            <p>Choose a crop and adjust the example values. The website uses a simple guide to show which conditions may deserve a closer look.</p>
-            <div class="demo-notice"><span>!</span><div><strong>This is only a practice tool</strong><small>It does not check real fields or run the notebook model. The notebook results above used made-up soybean data.</small></div></div>
+            <p>Choose a crop and adjust the example values. The website uses a simple guide to show which conditions may
+              deserve a closer look.</p>
+            <div class="demo-notice"><span>!</span>
+              <div><strong>This is only a practice tool</strong><small>It does not check real fields or run the notebook
+                  model. The notebook results above used made-up soybean data.</small></div>
+            </div>
           </div>
           <form class="scenario-form" id="scenario-form">
-            <div class="form-heading"><div><span class="form-heading-icon">⌁</span><div><strong>Your example</strong><small>Start with a preset or change the values</small></div></div></div>
+            <div class="form-heading">
+              <div><span class="form-heading-icon">⌁</span>
+                <div><strong>Your example</strong><small>Start with a preset or change the values</small></div>
+              </div>
+            </div>
             <details class="input-help">
               <summary>What do these values mean?</summary>
-              <p><strong>Plant greenness:</strong> a satellite-picture reading from 0.1 to 0.9. Higher means greener in this example; it is not a crop-health diagnosis.</p>
-              <p><strong>Weather changes:</strong> compare each value with what is usual for the area and season. A minus sign means less or cooler; a plus sign means more or warmer. Humidity uses percentage points.</p>
-              <p><strong>County code:</strong> an optional five-digit U.S. county ID. It is saved with your example but is not looked up.</p>
+              <p><strong>Plant greenness:</strong> a satellite-picture reading from 0.1 to 0.9. Higher means greener in
+                this example; it is not a crop-health diagnosis.</p>
+              <p><strong>Weather changes:</strong> compare each value with what is usual for the area and season. A
+                minus sign means less or cooler; a plus sign means more or warmer. Humidity uses percentage points.</p>
+              <p><strong>County code:</strong> an optional five-digit U.S. county ID. It is saved with your example but
+                is not looked up.</p>
             </details>
             <div class="input-grid">
-              <label>Crop<select id="crop" name="crop"><option value="Soybeans">Soybeans</option><option value="Corn">Corn</option><option value="Cotton">Cotton</option><option value="Winter Wheat">Winter Wheat</option></select></label>
-              <label>Year<select id="year" name="year"><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option></select></label>
-              <label class="county-field full-width">County code <span class="optional-label">optional</span><input id="fips" name="fips" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="e.g. 19153" aria-describedby="fips-hint" title="Enter a five-digit county code."><small id="fips-hint">Five digits. This code is saved only; no county data is loaded.</small></label>
-              <label class="range-label">Plant greenness<span class="range-output" id="ndvi-value">0.62</span><input id="ndvi" name="ndvi" type="range" min="0.1" max="0.9" step="0.01" value="0.62"><span class="range-scale"><span>Less green</span><span>More green</span></span></label>
-              <label class="range-label">Average temperature change<span class="range-output" id="temp-value">+1.5°C</span><input id="temp" name="temp" type="range" min="-5" max="8" step="0.1" value="1.5"><span class="range-scale"><span>5°C cooler</span><span>8°C warmer</span></span></label>
-              <label class="range-label">Rain or snow change<span class="range-output" id="rain-value">−20%</span><input id="rain" name="rain" type="range" min="-80" max="80" step="1" value="-20"><span class="range-scale"><span>Less rain</span><span>More rain</span></span></label>
+              <label>Crop<select id="crop" name="crop">
+                  <option value="Soybeans">Soybeans</option>
+                  <option value="Corn">Corn</option>
+                  <option value="Cotton">Cotton</option>
+                  <option value="Winter Wheat">Winter Wheat</option>
+                </select></label>
+              <label>Year<select id="year" name="year">
+                  <option>2022</option>
+                  <option>2021</option>
+                  <option>2020</option>
+                  <option>2019</option>
+                  <option>2018</option>
+                  <option>2017</option>
+                </select></label>
+              <label class="county-field full-width">County code <span class="optional-label">optional</span><input
+                  id="fips" name="fips" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5"
+                  placeholder="e.g. 19153" aria-describedby="fips-hint" title="Enter a five-digit county code."><small
+                  id="fips-hint">Five digits. This code is saved only; no county data is loaded.</small></label>
+              <label class="range-label">Plant greenness<span class="range-output" id="ndvi-value">0.62</span><input
+                  id="ndvi" name="ndvi" type="range" min="0.1" max="0.9" step="0.01" value="0.62"><span
+                  class="range-scale"><span>Less green</span><span>More green</span></span></label>
+              <label class="range-label">Average temperature change<span class="range-output"
+                  id="temp-value">+1.5°C</span><input id="temp" name="temp" type="range" min="-5" max="8" step="0.1"
+                  value="1.5"><span class="range-scale"><span>5°C cooler</span><span>8°C warmer</span></span></label>
+              <label class="range-label">Rain or snow change<span class="range-output" id="rain-value">−20%</span><input
+                  id="rain" name="rain" type="range" min="-80" max="80" step="1" value="-20"><span
+                  class="range-scale"><span>Less rain</span><span>More rain</span></span></label>
               <details class="advanced-inputs full-width">
                 <summary>More weather settings <span>7 optional values</span></summary>
                 <div class="advanced-grid">
-                  <label class="range-label">Highest temperature change<span class="range-output" id="temp-max-value">+2.0°C</span><input id="temp-max" name="temp-max" type="range" min="-5" max="10" step="0.1" value="2"><span class="range-scale"><span>5°C cooler</span><span>10°C warmer</span></span></label>
-                  <label class="range-label">Lowest temperature change<span class="range-output" id="temp-min-value">+1.0°C</span><input id="temp-min" name="temp-min" type="range" min="-5" max="8" step="0.1" value="1"><span class="range-scale"><span>5°C cooler</span><span>8°C warmer</span></span></label>
-                  <label class="range-label">Humidity change<span class="range-output" id="humidity-value">0 pp</span><input id="humidity" name="humidity" type="range" min="-40" max="40" step="1" value="0"><span class="range-scale"><span>40 points less</span><span>40 points more</span></span></label>
-                  <label class="range-label">Wind speed change<span class="range-output" id="wind-value">0%</span><input id="wind" name="wind" type="range" min="-50" max="150" step="1" value="0"><span class="range-scale"><span>Less wind</span><span>More wind</span></span></label>
-                  <label class="range-label">Sunlight change<span class="range-output" id="solar-value">0%</span><input id="solar" name="solar" type="range" min="-60" max="60" step="1" value="0"><span class="range-scale"><span>Less sunlight</span><span>More sunlight</span></span></label>
-                  <label class="range-label">Soil temperature change<span class="range-output" id="soil-temp-value">+1.0°C</span><input id="soil-temp" name="soil-temp" type="range" min="-5" max="8" step="0.1" value="1"><span class="range-scale"><span>5°C cooler</span><span>8°C warmer</span></span></label>
-                  <label class="range-label">Soil moisture change<span class="range-output" id="soil-moisture-value">0%</span><input id="soil-moisture" name="soil-moisture" type="range" min="-60" max="60" step="1" value="0"><span class="range-scale"><span>Less moisture</span><span>More moisture</span></span></label>
+                  <label class="range-label">Highest temperature change<span class="range-output"
+                      id="temp-max-value">+2.0°C</span><input id="temp-max" name="temp-max" type="range" min="-5"
+                      max="10" step="0.1" value="2"><span class="range-scale"><span>5°C cooler</span><span>10°C
+                        warmer</span></span></label>
+                  <label class="range-label">Lowest temperature change<span class="range-output"
+                      id="temp-min-value">+1.0°C</span><input id="temp-min" name="temp-min" type="range" min="-5"
+                      max="8" step="0.1" value="1"><span class="range-scale"><span>5°C cooler</span><span>8°C
+                        warmer</span></span></label>
+                  <label class="range-label">Humidity change<span class="range-output" id="humidity-value">0
+                      pp</span><input id="humidity" name="humidity" type="range" min="-40" max="40" step="1"
+                      value="0"><span class="range-scale"><span>40 points less</span><span>40 points
+                        more</span></span></label>
+                  <label class="range-label">Wind speed change<span class="range-output" id="wind-value">0%</span><input
+                      id="wind" name="wind" type="range" min="-50" max="150" step="1" value="0"><span
+                      class="range-scale"><span>Less wind</span><span>More wind</span></span></label>
+                  <label class="range-label">Sunlight change<span class="range-output" id="solar-value">0%</span><input
+                      id="solar" name="solar" type="range" min="-60" max="60" step="1" value="0"><span
+                      class="range-scale"><span>Less sunlight</span><span>More sunlight</span></span></label>
+                  <label class="range-label">Soil temperature change<span class="range-output"
+                      id="soil-temp-value">+1.0°C</span><input id="soil-temp" name="soil-temp" type="range" min="-5"
+                      max="8" step="0.1" value="1"><span class="range-scale"><span>5°C cooler</span><span>8°C
+                        warmer</span></span></label>
+                  <label class="range-label">Soil moisture change<span class="range-output"
+                      id="soil-moisture-value">0%</span><input id="soil-moisture" name="soil-moisture" type="range"
+                      min="-60" max="60" step="1" value="0"><span class="range-scale"><span>Less
+                        moisture</span><span>More moisture</span></span></label>
                 </div>
               </details>
-              <label class="upload-label full-width" for="image-upload"><span class="upload-icon">↑</span><span><strong>Optional: choose a crop picture</strong><small>It will only be previewed on this page. It will not be analyzed.</small></span><span class="upload-button">Choose picture</span><input id="image-upload" type="file" accept="image/*" hidden></label>
-              <div class="image-preview full-width" id="image-preview" hidden><img id="preview-image" alt="Selected field preview"><span id="image-name"></span><button type="button" id="remove-image" aria-label="Remove image">×</button></div>
+              <label class="upload-label full-width" for="image-upload"><span
+                  class="upload-icon">↑</span><span><strong>Optional: choose a crop picture</strong><small>It will only
+                    be previewed on this page. It will not be analyzed.</small></span><span class="upload-button">Choose
+                  picture</span><input id="image-upload" type="file" accept="image/*" hidden></label>
+              <div class="image-preview full-width" id="image-preview" hidden><img id="preview-image"
+                  alt="Selected field preview"><span id="image-name"></span><button type="button" id="remove-image"
+                  aria-label="Remove image">×</button></div>
             </div>
             <div class="preset-row" aria-label="Scenario presets">
-            <span>START WITH</span>
-            <button type="button" class="preset-button" data-preset="balanced">Balanced season</button>
-            <button type="button" class="preset-button" data-preset="dryWarm">Dry &amp; warm</button>
-            <button type="button" class="preset-button" data-preset="highStress">High stress</button>
-            <button type="button" class="preset-button" id="reset-scenario">Reset inputs</button>
+              <span>START WITH</span>
+              <button type="button" class="preset-button" data-preset="balanced">Balanced season</button>
+              <button type="button" class="preset-button" data-preset="dryWarm">Dry &amp; warm</button>
+              <button type="button" class="preset-button" data-preset="highStress">High stress</button>
+              <button type="button" class="preset-button" id="reset-scenario">Reset inputs</button>
             </div>
             <button type="submit" class="analyze-button">Show example results <span>→</span></button>
           </form>
           <aside class="result-panel" id="result-panel" aria-live="polite">
-            <div class="result-top"><span class="section-kicker">YOUR EXAMPLE RESULTS</span><span class="result-icon">✳</span></div>
-            <div class="result-placeholder" id="result-placeholder"><div class="placeholder-ring">↗</div><strong>Your results will appear here</strong><span>Choose your settings, then select “Show example results.”</span></div>
+            <div class="result-top"><span class="section-kicker">YOUR EXAMPLE RESULTS</span><span
+                class="result-icon">✳</span></div>
+            <div class="result-placeholder" id="result-placeholder">
+              <div class="placeholder-ring">↗</div><strong>Your results will appear here</strong><span>Choose your
+                settings, then select “Show example results.”</span>
+            </div>
             <div class="result-content" id="result-content" hidden>
-              <div class="result-score-row"><div><span class="result-label">Example check score · 0 to 100</span><div class="result-score"><span id="risk-score">—</span><small>/ 100</small></div></div><span class="risk-badge" id="risk-badge">—</span></div>
-              <p class="score-guide">A higher score means more of your chosen values crossed this example guide’s flags. It is not a chance of crop loss.</p>
+              <div class="result-score-row">
+                <div><span class="result-label">Example check score · 0 to 100</span>
+                  <div class="result-score"><span id="risk-score">—</span><small>/ 100</small></div>
+                </div><span class="risk-badge" id="risk-badge">—</span>
+              </div>
+              <p class="score-guide">A higher score means more of your chosen values crossed this example guide’s flags.
+                It is not a chance of crop loss.</p>
               <div class="risk-meter"><span id="risk-meter-fill"></span></div>
               <p class="result-summary" id="result-summary"></p>
               <div class="result-divider"></div>
               <div class="result-meta"><span>Crop and year</span><strong id="result-crop"></strong></div>
-              <div class="result-meta result-inputs-row"><span>Values you chose</span><strong class="result-inputs" id="result-inputs"></strong></div>
-              <div class="result-caveat"><span>i</span> This simple example is not a real forecast, crop diagnosis, or result from the research model.</div>
-              <div class="result-actions"><button type="button" id="save-scenario" class="secondary-button">＋ Save this example</button><button type="button" id="export-scenario" class="secondary-button">↓ Download as CSV</button></div>
+              <div class="result-meta result-inputs-row"><span>Values you chose</span><strong class="result-inputs"
+                  id="result-inputs"></strong></div>
+              <div class="result-caveat"><span>i</span> This simple example is not a real forecast, crop diagnosis, or
+                result from the research model.</div>
+              <div class="result-actions"><button type="button" id="save-scenario" class="secondary-button">＋ Save this
+                  example</button><button type="button" id="export-scenario" class="secondary-button">↓ Download as
+                  CSV</button></div>
             </div>
           </aside>
         </section>
 
         <section class="field-log-section" id="field-log">
           <div class="field-log-heading">
-            <div><div class="section-kicker">SAVED ON THIS DEVICE</div><h2>Your saved examples</h2><p>These stay in this browser. Choose up to two to compare.</p></div>
-            <div class="field-log-tools"><span class="saved-count" id="saved-count">0 saved</span><button type="button" class="secondary-button" id="export-log">↓ Download all</button></div>
+            <div>
+              <div class="section-kicker">SAVED ON THIS DEVICE</div>
+              <h2>Your saved examples</h2>
+              <p>These stay in this browser. Choose up to two to compare.</p>
+            </div>
+            <div class="field-log-tools"><span class="saved-count" id="saved-count">0 saved</span><button type="button"
+                class="secondary-button" id="export-log">↓ Download all</button></div>
           </div>
-          <div class="field-log-empty" id="field-log-empty">No saved examples yet. Run an example and select <strong>Save this example</strong>.</div>
+          <div class="field-log-empty" id="field-log-empty">No saved examples yet. Run an example and select
+            <strong>Save this example</strong>.</div>
           <div class="scenario-list" id="scenario-list"></div>
           <div class="comparison-panel" id="comparison-panel" hidden aria-live="polite">
-            <div class="comparison-heading"><strong>Compare your examples</strong><button type="button" id="clear-comparison" class="text-button">Clear selection</button></div>
+            <div class="comparison-heading"><strong>Compare your examples</strong><button type="button"
+                id="clear-comparison" class="text-button">Clear selection</button></div>
             <div class="comparison-results" id="comparison-results"></div>
           </div>
         </section>
 
         <section class="method-section" id="method">
-          <div class="method-heading"><div><div class="section-kicker">HOW THE RESEARCH WORKS</div><h2>Pictures + weather + crop records.</h2></div><p>The notebook combines satellite pictures and weather history to study crop yields. In this website, the research model itself is not running.</p></div>
-          <div class="method-cards">
-            <article><span class="method-icon">▦</span><span class="method-index">01 / PICTURES</span><h3>Looks at satellite images</h3><p>Studies six pictures of the same area to find patterns in plant growth.</p><span class="method-tag">Satellite pictures · plant greenness</span></article>
-            <article><span class="method-icon">⌁</span><span class="method-index">02 / WEATHER</span><h3>Tracks weather over time</h3><p>Studies a year of monthly weather readings, such as temperature, rain, wind, and soil moisture.</p><span class="method-tag">12 months · 9 weather readings</span></article>
-            <article><span class="method-icon">✳</span><span class="method-index">03 / RESULTS</span><h3>Estimates yield groups and values</h3><p>The research model groups yields as low, medium, or high, and also estimates a yield value.</p><span class="method-tag">Compared with a second method</span></article>
+          <div class="method-heading">
+            <div>
+              <div class="section-kicker">HOW THE RESEARCH WORKS</div>
+              <h2>Pictures + weather + crop records.</h2>
+            </div>
+            <p>The notebook combines satellite pictures and weather history to study crop yields. In this website, the
+              research model itself is not running.</p>
           </div>
-          <div class="method-footer"><span><i></i> Notebook test: soybeans only</span><span>Weather data is not connected to this website</span><span>Real-data support is still in progress</span></div>
+          <div class="method-cards">
+            <article><span class="method-icon">▦</span><span class="method-index">01 / PICTURES</span>
+              <h3>Looks at satellite images</h3>
+              <p>Studies six pictures of the same area to find patterns in plant growth.</p><span
+                class="method-tag">Satellite pictures · plant greenness</span>
+            </article>
+            <article><span class="method-icon">⌁</span><span class="method-index">02 / WEATHER</span>
+              <h3>Tracks weather over time</h3>
+              <p>Studies a year of monthly weather readings, such as temperature, rain, wind, and soil moisture.</p>
+              <span class="method-tag">12 months · 9 weather readings</span>
+            </article>
+            <article><span class="method-icon">✳</span><span class="method-index">03 / RESULTS</span>
+              <h3>Estimates yield groups and values</h3>
+              <p>The research model groups yields as low, medium, or high, and also estimates a yield value.</p><span
+                class="method-tag">Compared with a second method</span>
+            </article>
+          </div>
+          <div class="method-footer"><span><i></i> Notebook test: soybeans only</span><span>Weather data is not
+              connected to this website</span><span>Real-data support is still in progress</span></div>
           <div class="data-scope">
-            <div><span class="section-kicker">WHAT THE NOTEBOOK TESTED</span><strong>Soybeans · 2018–2022 · 10 counties · 300 made-up examples</strong><small>The test results use computer-generated examples, not real crop or weather records.</small></div>
-            <div class="split-counts"><span><b>192</b> for learning</span><span><b>48</b> for tuning</span><span><b>60</b> for testing</span></div>
+            <div><span class="section-kicker">WHAT THE NOTEBOOK TESTED</span><strong>Soybeans · 2018–2022 · 10 counties
+                · 300 made-up examples</strong><small>The test results use computer-generated examples, not real crop or
+                weather records.</small></div>
+            <div class="split-counts"><span><b>192</b> for learning</span><span><b>48</b> for
+                tuning</span><span><b>60</b> for testing</span></div>
           </div>
         </section>
-        <footer class="footer"><a class="brand footer-brand" href="#overview"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M25.7 5.4C15 5.7 7.2 9.3 7.2 17.4c0 3.9 2.7 6.4 6.2 6.4 7.6 0 12-8.1 12.3-18.4Z"/><path d="M5.2 27.1c4-7.7 9.1-12.4 16.4-16.2"/></svg></span><span class="brand-name">crop<span>net</span></span></a><span>A learning demo about crops, weather, and yield.</span><a href="#overview">Back to top ↑</a></footer>
+        <footer class="footer"><a class="brand footer-brand" href="#overview"><span class="brand-mark"
+              aria-hidden="true"><svg viewBox="0 0 32 32">
+                <path d="M25.7 5.4C15 5.7 7.2 9.3 7.2 17.4c0 3.9 2.7 6.4 6.2 6.4 7.6 0 12-8.1 12.3-18.4Z" />
+                <path d="M5.2 27.1c4-7.7 9.1-12.4 16.4-16.2" />
+              </svg></span><span class="brand-name">crop<span>net</span></span></a><span>A learning demo about crops,
+            weather, and yield.</span><a href="#overview">Back to top ↑</a></footer>
       </div>
     </main>
   </div>
   <div class="toast" id="toast" role="status"></div>
   <script src="app.js"></script>
 </body>
+
 </html>
