@@ -42,6 +42,222 @@ function updateRangeLabels() {
   document.querySelector("#soil-moisture-value").textContent = `${formatSigned(parameterInputs.soilMoisture.value)}%`;
 }
 
+const weatherSearchForm = document.querySelector("#weather-search-form");
+const weatherPlaceChoice = document.querySelector("#weather-place-choice");
+const weatherPlaceResults = document.querySelector("#weather-place-results");
+const weatherStatus = document.querySelector("#weather-status");
+const weatherResults = document.querySelector("#weather-results");
+const weatherSearchButton = document.querySelector("#search-weather");
+const weatherLoadButton = document.querySelector("#load-weather");
+const yearSelect = document.querySelector("#year");
+let weatherLocations = [];
+let weatherRequestController;
+
+function setWeatherStatus(message, isError = false) {
+  weatherStatus.textContent = message;
+  weatherStatus.classList.toggle("error", isError);
+}
+
+function beginWeatherRequest() {
+  if (weatherRequestController) weatherRequestController.abort();
+  weatherRequestController = new AbortController();
+  weatherSearchButton.disabled = true;
+  weatherLoadButton.disabled = true;
+  return weatherRequestController;
+}
+
+function finishWeatherRequest(controller) {
+  if (weatherRequestController !== controller) return;
+  weatherRequestController = undefined;
+  weatherSearchButton.disabled = false;
+  weatherLoadButton.disabled = weatherLocations.length === 0;
+}
+
+weatherSearchForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const place = document.querySelector("#weather-place").value.trim();
+  if (!place) return;
+
+  const controller = beginWeatherRequest();
+  weatherResults.hidden = true;
+  weatherPlaceChoice.hidden = true;
+  weatherLocations = [];
+  weatherLoadButton.disabled = true;
+  setWeatherStatus("Searching for places...");
+
+  try {
+    const url = new URL("https://geocoding-api.open-meteo.com/v1/search");
+    url.search = new URLSearchParams({ name: place, count: "5", language: "en", format: "json" });
+    const response = await fetch(url, { signal: controller.signal });
+    if (!response.ok) throw new Error(`Place search failed (${response.status}).`);
+    const payload = await response.json();
+    if (!Array.isArray(payload.results) || payload.results.length === 0) {
+      setWeatherStatus("No matching places found. Try adding a state, province, or country.");
+      return;
+    }
+
+    weatherLocations = payload.results.filter((location) =>
+      Number.isFinite(location.latitude) && Number.isFinite(location.longitude) &&
+      typeof location.name === "string"
+    );
+    if (!weatherLocations.length) throw new Error("The place search returned no usable locations.");
+
+    weatherPlaceResults.replaceChildren(...weatherLocations.map((location, index) => {
+      const details = [location.admin1, location.country].filter(Boolean).join(", ");
+      return new Option(details ? `${location.name}, ${details}` : location.name, String(index));
+    }));
+    weatherPlaceChoice.hidden = false;
+    setWeatherStatus(`Found ${weatherLocations.length} location${weatherLocations.length === 1 ? "" : "s"}. Choose the right one, then load ${yearSelect.value}.`);
+  } catch (error) {
+    if (error.name === "AbortError") return;
+    console.error("Unable to search for a weather location.", error);
+    setWeatherStatus(error.message || "Could not search for places. Check your connection and try again.", true);
+  } finally {
+    finishWeatherRequest(controller);
+  }
+});
+
+weatherLoadButton.addEventListener("click", async () => {
+  const location = weatherLocations[Number(weatherPlaceResults.value)];
+  if (!location) {
+    setWeatherStatus("Search for a place and choose a location first.", true);
+    return;
+  }
+
+  const year = yearSelect.value;
+  const controller = beginWeatherRequest();
+  setWeatherStatus(`Loading historical weather for ${location.name}...`);
+
+  try {
+    const url = new URL("https://archive-api.open-meteo.com/v1/archive");
+    url.search = new URLSearchParams({
+      latitude: String(location.latitude),
+      longitude: String(location.longitude),
+      start_date: `${year}-01-01`,
+      end_date: `${year}-12-31`,
+      hourly: [
+        "temperature_2m",
+        "relative_humidity_2m",
+        "precipitation",
+        "wind_speed_10m",
+        "shortwave_radiation",
+        "soil_temperature_0_to_7cm",
+        "soil_moisture_0_to_7cm"
+      ].join(","),
+      wind_speed_unit: "kmh",
+      temperature_unit: "celsius",
+      precipitation_unit: "mm",
+      timezone: "auto",
+      models: "era5_seamless"
+    });
+    const response = await fetch(url, { signal: controller.signal });
+    if (!response.ok) throw new Error(`Weather request failed (${response.status}).`);
+    const payload = await response.json();
+    const hourly = payload.hourly;
+    if (!hourly || !Array.isArray(hourly.time) || !hourly.time.length) {
+      throw new Error("The weather service returned no hourly records for this place and year.");
+    }
+
+    const variables = [
+      "temperature_2m",
+      "relative_humidity_2m",
+      "precipitation",
+      "wind_speed_10m",
+      "shortwave_radiation",
+      "soil_temperature_0_to_7cm",
+      "soil_moisture_0_to_7cm"
+    ];
+    for (const variable of variables) {
+      if (!Array.isArray(hourly[variable]) || hourly[variable].length !== hourly.time.length) {
+        throw new Error(`The weather service did not return a complete ${variable} series.`);
+      }
+    }
+
+    const months = Array.from({ length: 12 }, () => ({
+      temperature: { sum: 0, count: 0 },
+      humidity: { sum: 0, count: 0 },
+      precipitation: { sum: 0, count: 0 },
+      wind: { sum: 0, count: 0 },
+      sunlight: { sum: 0, count: 0 },
+      soilTemperature: { sum: 0, count: 0 },
+      soilMoisture: { sum: 0, count: 0 }
+    }));
+    const fields = [
+      ["temperature_2m", "temperature"],
+      ["relative_humidity_2m", "humidity"],
+      ["precipitation", "precipitation"],
+      ["wind_speed_10m", "wind"],
+      ["shortwave_radiation", "sunlight"],
+      ["soil_temperature_0_to_7cm", "soilTemperature"],
+      ["soil_moisture_0_to_7cm", "soilMoisture"]
+    ];
+
+    hourly.time.forEach((time, index) => {
+      const monthIndex = Number(time.slice(5, 7)) - 1;
+      if (!time.startsWith(`${year}-`) || monthIndex < 0 || monthIndex > 11) return;
+      const month = months[monthIndex];
+      fields.forEach(([apiField, key]) => {
+        const value = hourly[apiField][index];
+        if (!Number.isFinite(value)) return;
+        month[key].sum += value;
+        month[key].count += 1;
+      });
+    });
+
+    const monthNames = new Intl.DateTimeFormat("en", { month: "long", timeZone: "UTC" });
+    const format = (stat, digits = 1) => {
+      if (!stat.count) return "—";
+      const value = stat.sum / stat.count;
+      return value.toFixed(digits);
+    };
+    const rows = months.map((month, index) => {
+      const row = document.createElement("tr");
+      const values = [
+        monthNames.format(new Date(Date.UTC(2020, index, 1))),
+        format(month.temperature),
+        month.precipitation.count ? month.precipitation.sum.toFixed(1) : "—",
+        format(month.humidity),
+        format(month.wind),
+        format(month.sunlight),
+        format(month.soilTemperature),
+        format(month.soilMoisture, 3)
+      ];
+      values.forEach((value, valueIndex) => {
+        const cell = document.createElement(valueIndex === 0 ? "th" : "td");
+        if (valueIndex === 0) cell.scope = "row";
+        cell.textContent = value;
+        row.append(cell);
+      });
+      return row;
+    });
+    document.querySelector("#weather-months").replaceChildren(...rows);
+    const locationLabel = [location.name, location.admin1, location.country].filter(Boolean).join(", ");
+    document.querySelector("#weather-location-label").textContent = locationLabel;
+    document.querySelector("#weather-year-label").textContent = year;
+    weatherResults.hidden = false;
+    setWeatherStatus(`Loaded monthly historical estimates for ${locationLabel} in ${year}. Rain is a monthly total; the other values are monthly averages.`);
+  } catch (error) {
+    if (error.name === "AbortError") return;
+    console.error("Unable to load historical weather.", error);
+    setWeatherStatus(error.message || "Could not load historical weather. Check your connection and try again.", true);
+  } finally {
+    finishWeatherRequest(controller);
+  }
+});
+
+yearSelect.addEventListener("change", () => {
+  if (weatherRequestController) {
+    weatherRequestController.abort();
+    weatherRequestController = undefined;
+    weatherSearchButton.disabled = false;
+    weatherLoadButton.disabled = weatherLocations.length === 0;
+  }
+  weatherResults.hidden = true;
+  setWeatherStatus(weatherLocations.length
+    ? `Year changed to ${yearSelect.value}. Choose a place and load the selected year.`
+    : `Year changed to ${yearSelect.value}. Search for a place, then load the selected year.`);
+});
+
 Object.values(parameterInputs).forEach((input) => input.addEventListener("input", updateRangeLabels));
 document.querySelectorAll(".preset-button").forEach((button) => {
   button.addEventListener("click", () => {
@@ -141,7 +357,7 @@ form.addEventListener("submit", (event) => {
 document.querySelector("#save-scenario").addEventListener("click", () => {
   if (!currentScenario) return;
   if (savedScenarios.length >= maxSavedScenarios) {
-    showToast(`You can save up to ${maxSavedScenarios} examples. Remove one to save another.`);
+    showToast(`You can save up to ${maxSavedScenarios} scenarios. Remove one to save another.`);
     return;
   }
   const scenario = {
@@ -152,7 +368,7 @@ document.querySelector("#save-scenario").addEventListener("click", () => {
   savedScenarios.unshift(scenario);
   if (persistScenarios()) {
     renderScenarioList();
-    showToast("Example saved in this browser.");
+    showToast("Scenario saved in this browser.");
   } else {
     savedScenarios.shift();
   }
@@ -215,7 +431,7 @@ function loadScenarios() {
     })).slice(0, maxSavedScenarios);
   } catch (error) {
     console.error("Unable to load saved CropNet scenarios.", error);
-    showToast("Could not read saved examples in this browser.");
+    showToast("Could not read saved scenarios in this browser.");
     return [];
   }
 }
@@ -302,7 +518,7 @@ function removeScenario(id) {
   comparedIds.delete(id);
   if (persistScenarios()) {
     renderScenarioList();
-    showToast("Saved example deleted.");
+    showToast("Saved scenario deleted.");
   } else {
     savedScenarios = previous;
   }
@@ -310,7 +526,7 @@ function removeScenario(id) {
 
 function toggleComparison(id, selected) {
   if (selected && comparedIds.size >= 2) {
-    showToast("Choose up to two examples to compare.");
+    showToast("Choose up to two scenarios to compare.");
     renderScenarioList();
     return;
   }
@@ -350,7 +566,7 @@ function renderComparison() {
     const difference = Math.abs(chosen[0].score - chosen[1].score);
     const note = document.createElement("p");
     note.className = "comparison-difference";
-    note.textContent = `The example scores differ by ${difference} points. This is not a real forecast.`;
+    note.textContent = `The guide scores differ by ${difference} points. This is not a forecast.`;
     results.append(note);
   }
 }
@@ -366,7 +582,7 @@ function downloadCsv(scenarios, filename) {
     "Average temperature change (C)", "Highest temperature change (C)", "Lowest temperature change (C)",
     "Rain or snow change (%)", "Humidity change (percentage points)", "Wind speed change (%)",
     "Sunlight change (%)", "Soil temperature change (C)", "Soil moisture change (%)",
-    "Example stress score (not a forecast)", "Example stress level", "Saved at"
+    "Guide score (not a forecast)", "Guide score level", "Saved at"
   ];
   const rows = scenarios.map((scenario) => [
     scenario.crop, scenario.year, scenario.fips || "", scenario.ndvi.toFixed(2),
@@ -384,7 +600,7 @@ function downloadCsv(scenarios, filename) {
   link.click();
   link.remove();
   URL.revokeObjectURL(url);
-  showToast(`Downloaded ${scenarios.length} example${scenarios.length === 1 ? "" : "s"} as a CSV spreadsheet.`);
+  showToast(`Downloaded ${scenarios.length} scenario${scenarios.length === 1 ? "" : "s"} as a CSV spreadsheet.`);
 }
 
 function csvCell(value) {
@@ -394,7 +610,7 @@ function csvCell(value) {
 
 document.querySelector("#export-log").addEventListener("click", () => {
   if (!savedScenarios.length) {
-    showToast("Save an example before downloading the list.");
+    showToast("Save a scenario before downloading the list.");
     return;
   }
   downloadCsv(savedScenarios, "cropnet-field-log.csv");
@@ -408,7 +624,7 @@ function showToast(message) {
 }
 
 document.querySelector("#about-button").addEventListener("click", () => {
-  showToast("All scores here are examples. No live farm data or prediction model is connected.");
+  showToast("Historical weather is from Open-Meteo reanalysis. The guide score and notebook results are separate.");
 });
 
 const menuButton = document.querySelector("#menu-button");
