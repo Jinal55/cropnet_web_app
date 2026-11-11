@@ -53,6 +53,7 @@ const weatherLoadButton = document.querySelector("#load-weather");
 const weatherYearSelect = document.querySelector("#year");
 let weatherLocations = [];
 let weatherRequestController;
+let weatherRequestTimeout;
 
 function setWeatherStatus(message, isError = false) {
   weatherStatus.textContent = message;
@@ -61,14 +62,19 @@ function setWeatherStatus(message, isError = false) {
 
 function startWeatherRequest() {
   weatherRequestController?.abort();
+  clearTimeout(weatherRequestTimeout);
   weatherRequestController = new AbortController();
+  const controller = weatherRequestController;
+  weatherRequestTimeout = setTimeout(() => controller.abort(), 30000);
   weatherSearchButton.disabled = true;
   weatherLoadButton.disabled = true;
-  return weatherRequestController;
+  return controller;
 }
 
 function finishWeatherRequest(controller) {
   if (weatherRequestController !== controller) return;
+  clearTimeout(weatherRequestTimeout);
+  weatherRequestTimeout = undefined;
   weatherRequestController = undefined;
   weatherSearchButton.disabled = false;
   weatherLoadButton.disabled = weatherLocations.length === 0;
@@ -95,6 +101,7 @@ weatherSearchForm.addEventListener("submit", async (event) => {
       format: "json"
     });
     const response = await fetch(url, { signal: controller.signal });
+    if (response.status === 429) throw new Error("Place search is busy right now. Wait a minute and try again.");
     if (!response.ok) throw new Error(`Place search failed (${response.status}).`);
 
     const payload = await response.json();
@@ -117,7 +124,12 @@ weatherSearchForm.addEventListener("submit", async (event) => {
     weatherPlaceChoice.hidden = false;
     setWeatherStatus(`Found ${weatherLocations.length} location${weatherLocations.length === 1 ? "" : "s"}. Choose the right one, then load ${weatherYearSelect.value}.`);
   } catch (error) {
-    if (error.name === "AbortError") return;
+    if (error.name === "AbortError") {
+      if (weatherRequestController === controller) {
+        setWeatherStatus("Place search timed out. Check your connection and try again.", true);
+      }
+      return;
+    }
     console.error("Unable to search for a weather location.", error);
     setWeatherStatus(error.message || "Could not search for places. Check your connection and try again.", true);
   } finally {
@@ -159,6 +171,7 @@ weatherLoadButton.addEventListener("click", async () => {
       models: "era5_seamless"
     });
     const response = await fetch(url, { signal: controller.signal });
+    if (response.status === 429) throw new Error("The weather service is busy right now. Wait a minute and try again.");
     if (!response.ok) throw new Error(`Weather request failed (${response.status}).`);
 
     const payload = await response.json();
@@ -227,7 +240,12 @@ weatherLoadButton.addEventListener("click", async () => {
     weatherResults.hidden = false;
     setWeatherStatus(`Loaded monthly historical estimates for ${location.name} in ${year}. Rain is a monthly total; other values are monthly averages.`);
   } catch (error) {
-    if (error.name === "AbortError") return;
+    if (error.name === "AbortError") {
+      if (weatherRequestController === controller) {
+        setWeatherStatus("Weather lookup timed out. Check your connection and try again.", true);
+      }
+      return;
+    }
     console.error("Unable to load historical weather.", error);
     setWeatherStatus(error.message || "Could not load historical weather. Check your connection and try again.", true);
   } finally {
@@ -239,6 +257,8 @@ weatherYearSelect.addEventListener("change", () => {
   if (weatherRequestController) {
     weatherRequestController.abort();
     weatherRequestController = undefined;
+    clearTimeout(weatherRequestTimeout);
+    weatherRequestTimeout = undefined;
     weatherSearchButton.disabled = false;
     weatherLoadButton.disabled = weatherLocations.length === 0;
   }
