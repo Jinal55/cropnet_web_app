@@ -76,6 +76,13 @@ h1 em { color: #5a8562; font-style: normal; }
 .model-value span { color: #98a69a; font-size: 14px; padding: 0 2px; }
 .metric-label { margin-top: 1px; color: #3e4c42; font-size: 10px; font-weight: 600; }
 .metric-note { margin-top: 4px; color: #97a099; font-size: 9px; }
+.mini-bars { position: absolute; right: 18px; bottom: 17px; display: flex; align-items: end; gap: 3px; height: 25px; opacity: .7; }
+.mini-bars i { width: 4px; border-radius: 4px; background: #80a786; height: 9px; }
+.mini-bars i:nth-child(2n) { height: 16px; }.mini-bars i:nth-child(3n) { height: 22px; }.mini-bars i:nth-child(5n) { height: 12px; }.mini-bars i:nth-child(7n) { height: 19px; }
+.metric-sparkline { position: absolute; width: 118px; height: 31px; right: 15px; bottom: 14px; opacity: .72; }
+.metric-sparkline svg { width: 100%; height: 100%; fill: none; stroke: #bf995f; stroke-width: 2; }
+.model-dots { position: absolute; right: 19px; bottom: 23px; display: flex; align-items: center; gap: 6px; }
+.model-dots i { width: 7px; height: 7px; border-radius: 50%; background: #9cacc1; }.model-dots i:first-child,.model-dots i:last-child { background: #6888a0; }.model-dots b { color: #9ba8b5; font-size: 14px; letter-spacing: 1px; }
 .dashboard-grid { display: grid; grid-template-columns: 1.42fr 1fr; gap: 15px; margin-bottom: 17px; }
 .panel { padding: 19px 20px 15px; min-height: 286px; }
 .panel-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
@@ -298,7 +305,7 @@ input[type="range"] { display: block; width: 100%; height: 18px; margin: 5px 0 1
 @media (max-width: 370px) { .live-pill { letter-spacing: .4px; }.topbar { padding: 0 11px; }.breadcrumb { margin-left: 7px; }.page-wrap { padding-right: 12px; padding-left: 12px; }.chart-legend { gap: 8px; }.sample-chip { font-size: 7px; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
 
-/* Warm, natural colors keep the project easy to read. */
+/* A warmer, more welcoming visual language for the project demo. */
 :root {
   --ink: #29372d;
   --muted: #727d70;
@@ -674,79 +681,4 @@ input[type="range"] { height: 22px; accent-color: #64814d; }
   .method-cards p { min-height: 0; }
   .method-footer { align-items: flex-start; flex-direction: column; }
   .footer { flex-wrap: wrap; gap: 10px; }
-}
-
-.data-warning p { font-size: 12px; line-height: 1.65; }
-.results-table th, .results-table td { font-size: 11px; }
-.results-table thead th { font-size: 10px; }
-.metric-help p, .benchmark-note, .experiment-footnote { font-size: 11px; line-height: 1.6; }
-.data-scope small { font-size: 10px; }
-.weather-data-section {
-  margin: 18px 0 7px;
-  padding: 23px;
-  border: 1px solid #e9e4d8;
-  border-radius: 18px;
-  background: #fffefa;
-  box-shadow: 0 5px 20px rgba(58, 64, 44, .04);
-}
-.weather-data-heading { margin-bottom: 15px; }
-.weather-data-heading h2 { margin-top: 5px; font-size: 23px; }
-.weather-data-heading p { margin: 5px 0 0; color: #737d70; font-size: 12px; }
-.weather-search-form {
-  display: grid;
-  grid-template-columns: auto minmax(180px, 1fr) auto;
-  align-items: center;
-  gap: 10px;
-  max-width: 700px;
-}
-.weather-search-form label, .weather-place-choice label {
-  color: #53614f;
-  font-size: 12px;
-  font-weight: 600;
-}
-.weather-search-form input, .weather-place-choice select {
-  min-width: 0;
-  height: 40px;
-  padding: 0 11px;
-  border: 1px solid #e4e3d8;
-  border-radius: 9px;
-  background: #fff;
-  color: #39483a;
-  font: inherit;
-}
-.weather-place-choice {
-  display: grid;
-  grid-template-columns: auto minmax(180px, 1fr) auto;
-  align-items: center;
-  gap: 10px;
-  max-width: 850px;
-  margin-top: 12px;
-}
-.weather-place-choice[hidden] { display: none; }
-.weather-search-form button, .weather-place-choice button { min-height: 40px; }
-.weather-data-section button:disabled { cursor: wait; opacity: .6; }
-.weather-status { margin: 12px 0 0; color: #687466; font-size: 11px; }
-.weather-status.error { color: #a34f3d; }
-.weather-results { margin-top: 16px; }
-.weather-results-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
-.weather-results-heading h3 { margin: 0; color: #40503f; font-size: 16px; }
-.weather-results-heading span { color: #687466; font-size: 12px; }
-.weather-table-scroll { overflow-x: auto; }
-.weather-table { width: 100%; border-collapse: collapse; text-align: left; }
-.weather-table th, .weather-table td {
-  padding: 9px 10px;
-  border-bottom: 1px solid #ecebe2;
-  color: #687466;
-  font-size: 11px;
-  white-space: nowrap;
-}
-.weather-table thead th { color: #71806d; font-weight: 700; }
-.weather-table tbody th { color: #40503f; font-weight: 600; }
-.weather-attribution { margin: 12px 0 0; color: #737d70; font-size: 10px; line-height: 1.6; }
-.weather-attribution a { color: #486d45; text-decoration: underline; text-underline-offset: 2px; }
-
-@media (max-width: 700px) {
-  .weather-data-section { padding: 17px; }
-  .weather-search-form, .weather-place-choice { grid-template-columns: 1fr; align-items: stretch; }
-  .weather-results-heading { align-items: flex-start; flex-direction: column; gap: 3px; }
 }
