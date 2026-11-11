@@ -5,14 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f6f7f2">
-  <meta name="description" content="Explore crop and weather scenarios with a clear, interactive CropNet project demo.">
+  <meta name="description" content="Explore crop and weather scenarios and read the model results saved in the CropNet research notebook.">
   <title>CropNet — Crop & weather explorer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=weather-history-2">
 </head>
 
 <body>
@@ -25,22 +25,19 @@
           </svg></span>
         <span class="brand-name">crop<span>net</span></span>
       </a>
-      <div class="workspace-label">MENU</div>
+      <div class="workspace-label">PROJECT</div>
       <nav class="side-nav" aria-label="Main navigation">
         <a class="nav-link active" href="#overview"><span class="nav-icon">◫</span>Overview</a>
-        <a class="nav-link" href="#explorer"><span class="nav-icon">⌁</span>Explore an example</a>
-        <a class="nav-link" href="#field-log"><span class="nav-icon">▤</span>Saved examples</a>
-        <a class="nav-link" href="#experiment-results"><span class="nav-icon">▥</span>Test results</a>
+        <a class="nav-link" href="#explorer"><span class="nav-icon">⌁</span>Try a scenario</a>
+        <a class="nav-link" href="#weather-data"><span class="nav-icon">◷</span>Weather history</a>
+        <a class="nav-link" href="#field-log"><span class="nav-icon">▤</span>Saved scenarios</a>
+        <a class="nav-link" href="#experiment-results"><span class="nav-icon">▥</span>Model results</a>
         <a class="nav-link" href="#method"><span class="nav-icon">◉</span>How it works</a>
       </nav>
       <div class="sidebar-bottom">
-        <!-- <div class="status-card">
-          <span class="status-dot"></span>
-          <div><strong>Project demo</strong><small>Example data only</small></div>
-        </div> -->
         <div class="profile">
           <div class="avatar">CN</div>
-          <div><strong>CropNet project</strong><small>Field research</small></div>
+          <div><strong>CropNet project</strong><small>Research notebook</small></div>
           <span class="profile-more">···</span>
         </div>
       </div>
@@ -49,9 +46,9 @@
     <main class="main-content" id="overview">
       <header class="topbar">
         <button class="menu-button" id="menu-button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-        <div class="breadcrumb">Workspace <span>/</span> <strong>Overview</strong></div>
-        <div class="topbar-right"><span class="live-pill"><i></i> EXAMPLE MODE</span><button class="help-button"
-            aria-label="About this demo" id="about-button">?</button></div>
+        <div class="breadcrumb">CropNet <span>/</span> <strong>Overview</strong></div>
+        <div class="topbar-right"><span class="live-pill">PROJECT PREVIEW</span><button class="help-button"
+            aria-label="About this project" id="about-button">?</button></div>
       </header>
 
       <div class="page-wrap">
@@ -59,21 +56,20 @@
           <div>
             <div class="eyebrow"><span class="eyebrow-line"></span> CROPS, WEATHER & YIELD</div>
             <h1>Understand the season. <br class="mobile-break"> <em>Explore the data.</em></h1>
-            <p class="welcome-copy">Take a closer look at how crops and weather connect. Explore a few examples, see
-              what the research found, and get a feel for what the numbers can—and cannot—tell us.</p>
+            <p class="welcome-copy">See how the project brings crop and weather information together, read the results
+              saved in the notebook, and try changing a few conditions. The interactive guide is illustrative; it
+              doesn't use live farm data.</p>
           </div>
-          <a class="primary-button" href="#explorer"><span>＋</span> Explore an example</a>
+          <a class="primary-button" href="#explorer"><span>＋</span> Try a scenario</a>
         </section>
 
         <section class="metric-grid" aria-label="Project at a glance">
           <article class="metric-card">
-            <div class="metric-top"><span class="metric-icon green-icon">⌁</span><span class="metric-tag">DATA
-                SOURCES</span></div>
+            <div class="metric-top"><span class="metric-icon green-icon">⌁</span><span class="metric-tag">STUDY
+                INPUTS</span></div>
             <div class="metric-value">03</div>
             <div class="metric-label">Three kinds of information</div>
             <div class="metric-note">Satellite pictures · weather · crop yield</div>
-            <div class="mini-bars" aria-hidden="true">
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
           </article>
           <article class="metric-card">
             <div class="metric-top"><span class="metric-icon amber-icon">◷</span><span class="metric-tag">DATA IN EACH
@@ -81,9 +77,6 @@
             <div class="metric-value">6 <span class="metric-unit">frames</span></div>
             <div class="metric-label">Satellite pictures per sample</div>
             <div class="metric-note">12 months of weather · 9 measurements</div>
-            <div class="metric-sparkline" aria-hidden="true"><svg viewBox="0 0 160 32">
-                <path d="M2 25 C16 22 17 10 31 16 S48 26 60 14 79 8 89 17 107 27 119 11 139 8 158 3" />
-              </svg></div>
           </article>
           <article class="metric-card">
             <div class="metric-top"><span class="metric-icon blue-icon">⌘</span><span class="metric-tag">PROJECT
@@ -91,7 +84,6 @@
             <div class="metric-value model-value">Images <span>+</span> weather</div>
             <div class="metric-label">Looks for patterns over time</div>
             <div class="metric-note">Compared with a second model</div>
-            <div class="model-dots" aria-hidden="true"><i></i><i></i><i></i><b>····</b><i></i><i></i><i></i></div>
           </article>
         </section>
 
@@ -99,13 +91,13 @@
           <article class="panel trend-panel">
             <div class="panel-heading">
               <div>
-                <div class="section-kicker">EXAMPLE CHART</div>
+                <div class="section-kicker">SEASONAL PATTERNS</div>
                 <h2>How crops and weather change</h2>
               </div>
-              <span class="sample-chip"><i></i> Made-up example</span>
+              <span class="sample-chip"><i></i> Illustration</span>
             </div>
-            <p class="panel-description">These lines only show the kinds of changes the project studies. They are not
-              real farm or weather readings.</p>
+            <p class="panel-description">These lines show the kinds of seasonal changes the project studies. They are
+              not measurements from a farm.</p>
             <div class="chart-legend"><span><i class="legend-green"></i> Plant greenness</span><span><i
                   class="legend-orange"></i> Change in temperature</span></div>
             <div class="chart-wrap">
@@ -165,20 +157,20 @@
             <div>
               <div class="section-kicker">RESULTS FROM THE NOTEBOOK</div>
               <h2>How did the models do?</h2>
-              <p>These numbers were already in the notebook. This website did not train or run the models.</p>
+              <p>These figures are saved in the notebook. This website does not train or run the models.</p>
             </div>
-            <span class="synthetic-tag"><i></i> TESTED WITH MADE-UP DATA</span>
+            <span class="synthetic-tag"><i></i> SYNTHETIC SOYBEAN DATA</span>
           </div>
           <div class="data-warning"><span>!</span>
-            <p><strong>Important: these results are not from real farms.</strong> The project could not load real
-              weather data because a required program was missing, so it used computer-generated examples instead. The
-              notebook still needs work before it can process real data. Do not use these numbers to make farming
-              decisions.</p>
+            <p><strong>How to read these results:</strong> The notebook used 300 synthetic soybean samples across 10
+              counties and 2018–2022 (192 for training, 48 for validation, and 60 for evaluation). These generated
+              samples are not observed farm or weather records, so the scores describe this experiment only—not how
+              either model would perform on real farms.</p>
           </div>
           <div class="benchmark-grid">
             <article class="benchmark-card">
               <div class="benchmark-title">
-                <div><span class="section-kicker">SORTING YIELDS · TEST EXAMPLES</span>
+                <div><span class="section-kicker">YIELD GROUPS · 60 HELD-OUT SAMPLES</span>
                   <h3>Putting yields into 3 groups</h3>
                 </div><span class="unit-chip">Low · Medium · High</span>
               </div>
@@ -187,7 +179,7 @@
                   <thead>
                     <tr>
                       <th>Method</th>
-                      <th title="Share of test examples assigned to the correct group">Correct answers</th>
+                      <th title="Share of held-out samples assigned to the correct group">Correctly grouped</th>
                       <th title="Shows whether it performed evenly across the three groups; closer to 1 is better">
                         Across all groups</th>
                       <th title="Shows how well it told the groups apart; closer to 1 is better">Telling groups apart
@@ -196,13 +188,13 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <th>Image + weather model</th>
+                      <th>CNN–BiLSTM (images + weather)</th>
                       <td>78.3%</td>
                       <td>0.783</td>
                       <td>0.942</td>
                     </tr>
                     <tr class="best-row">
-                      <th>Second model</th>
+                      <th>XGBoost baseline</th>
                       <td>88.3%</td>
                       <td>0.884</td>
                       <td>0.955</td>
@@ -212,17 +204,17 @@
               </div>
               <details class="metric-help">
                 <summary>What do these scores mean?</summary>
-                <p><strong>Correct answers</strong> is the share of examples put in the right group. The next two scores
+                <p><strong>Correctly grouped</strong> is the share of samples put in the right group. The next two scores
                   show whether it did well across all groups and told groups apart. For those scores, closer to 1 is
                   better.</p>
               </details>
-              <p class="benchmark-note">The tree model got more examples right in this generated-data test.</p>
+              <p class="benchmark-note">XGBoost classified more of these samples correctly. Real-world performance is unknown.</p>
             </article>
             <article class="benchmark-card">
               <div class="benchmark-title">
-                <div><span class="section-kicker">ESTIMATING YIELD · TEST EXAMPLES</span>
+                <div><span class="section-kicker">YIELD ESTIMATES · 60 HELD-OUT SAMPLES</span>
                   <h3>How close were yield estimates?</h3>
-                </div><span class="unit-chip">Notebook's units</span>
+                </div><span class="unit-chip">Units not reported</span>
               </div>
               <div class="table-scroll">
                 <table class="results-table">
@@ -237,13 +229,13 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <th>Image + weather model</th>
+                      <th>CNN–BiLSTM (images + weather)</th>
                       <td>2.603</td>
                       <td>3.441</td>
                       <td>0.886</td>
                     </tr>
                     <tr>
-                      <th>Another model</th>
+                      <th>XGBoost baseline</th>
                       <td>2.689</td>
                       <td>3.300</td>
                       <td>0.895</td>
@@ -253,10 +245,10 @@
               </div>
               <details class="metric-help">
                 <summary>How should I read this?</summary>
-                <p>The first number is the average error: 2.603 is lower than 2.689. The other model did better on the
-                  large-error score and fit score. The notebook does not give the yield unit in this table.</p>
+                <p>The CNN–BiLSTM had a slightly lower average error. XGBoost had fewer large errors and a slightly
+                  higher fit score. The notebook does not report the yield unit.</p>
               </details>
-              <p class="benchmark-note">Neither method did best on every measure. These are not real yield estimates.
+              <p class="benchmark-note">Neither method led on every measure. These are not real yield estimates.
               </p>
             </article>
           </div>
@@ -267,7 +259,7 @@
               </div><span class="unit-chip">Correct group answers</span>
             </div>
             <div class="ablation-bars" role="img"
-              aria-label="Correct group answers: satellite pictures only 83.3 percent, weather only 68.3 percent, pictures and weather 78.3 percent, second method 88.3 percent">
+              aria-label="Correct group answers: satellite pictures only 83.3 percent, weather only 68.3 percent, pictures and weather 78.3 percent, XGBoost baseline 88.3 percent">
               <div class="ablation-row"><span>Satellite pictures only</span>
                 <div class="ablation-track"><i style="width:83.3%"></i></div><strong>83.3%</strong>
               </div>
@@ -277,40 +269,40 @@
               <div class="ablation-row"><span>Pictures + weather</span>
                 <div class="ablation-track"><i style="width:78.3%"></i></div><strong>78.3%</strong>
               </div>
-              <div class="ablation-row"><span>Second model</span>
+              <div class="ablation-row"><span>XGBoost baseline</span>
                 <div class="ablation-track"><i class="baseline-bar" style="width:88.3%"></i></div><strong>88.3%</strong>
               </div>
             </div>
           </article>
-          <div class="experiment-footnote">The notebook tested on 60 generated examples from two counties. The values
-            above are copied from its saved results.</div>
+          <div class="experiment-footnote">The figures above are copied from the notebook's saved evaluation.</div>
         </section>
 
         <section class="explorer-section" id="explorer">
           <div class="explorer-intro">
-            <div class="section-kicker">TRY YOUR OWN EXAMPLE</div>
+            <div class="section-kicker">TRY A SCENARIO</div>
             <h2>What happens when the weather shifts?</h2>
-            <p>Choose a crop and adjust the example values. The website uses a simple guide to show which conditions may
-              deserve a closer look.</p>
+            <p>Choose a crop and adjust the values to see how they affect a simple, illustrative guide score.</p>
             <div class="demo-notice"><span>!</span>
-              <div><strong>This is only a practice tool</strong><small>It does not check real fields or run the notebook
-                  model. The notebook results above used made-up soybean data.</small></div>
+              <div><strong>A guide, not a prediction</strong><small>This tool is not connected to farm or weather
+                  records and does not run the research model. Use the historical weather lookup below to view
+                  regional estimates; they do not feed into this score. The model results above use synthetic soybean
+                  data.</small></div>
             </div>
           </div>
           <form class="scenario-form" id="scenario-form">
             <div class="form-heading">
               <div><span class="form-heading-icon">⌁</span>
-                <div><strong>Your example</strong><small>Start with a preset or change the values</small></div>
+                <div><strong>Your scenario</strong><small>Start with a preset or change the values</small></div>
               </div>
             </div>
             <details class="input-help">
               <summary>What do these values mean?</summary>
-              <p><strong>Plant greenness:</strong> a satellite-picture reading from 0.1 to 0.9. Higher means greener in
-                this example; it is not a crop-health diagnosis.</p>
+              <p><strong>Plant greenness:</strong> a satellite reading from 0.1 to 0.9. Higher values mean greener
+                plants; this isn't a crop-health diagnosis.</p>
               <p><strong>Weather changes:</strong> compare each value with what is usual for the area and season. A
                 minus sign means less or cooler; a plus sign means more or warmer. Humidity uses percentage points.</p>
-              <p><strong>County code:</strong> an optional five-digit U.S. county ID. It is saved with your example but
-                is not looked up.</p>
+              <p><strong>County code:</strong> an optional five-digit U.S. county ID. It is saved with your scenario
+                but isn't looked up.</p>
             </details>
             <div class="input-grid">
               <label>Crop<select id="crop" name="crop">
@@ -330,7 +322,7 @@
               <label class="county-field full-width">County code <span class="optional-label">optional</span><input
                   id="fips" name="fips" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5"
                   placeholder="e.g. 19153" aria-describedby="fips-hint" title="Enter a five-digit county code."><small
-                  id="fips-hint">Five digits. This code is saved only; no county data is loaded.</small></label>
+                  id="fips-hint">Five digits. This label is saved with the scenario. Use the weather lookup below to fetch regional history.</small></label>
               <label class="range-label">Plant greenness<span class="range-output" id="ndvi-value">0.62</span><input
                   id="ndvi" name="ndvi" type="range" min="0.1" max="0.9" step="0.01" value="0.62"><span
                   class="range-scale"><span>Less green</span><span>More green</span></span></label>
@@ -386,22 +378,22 @@
               <button type="button" class="preset-button" data-preset="highStress">High stress</button>
               <button type="button" class="preset-button" id="reset-scenario">Reset inputs</button>
             </div>
-            <button type="submit" class="analyze-button">Show example results <span>→</span></button>
+            <button type="submit" class="analyze-button">Show guide score <span>→</span></button>
           </form>
           <aside class="result-panel" id="result-panel" aria-live="polite">
-            <div class="result-top"><span class="section-kicker">YOUR EXAMPLE RESULTS</span><span
+            <div class="result-top"><span class="section-kicker">YOUR GUIDE SCORE</span><span
                 class="result-icon">✳</span></div>
             <div class="result-placeholder" id="result-placeholder">
-              <div class="placeholder-ring">↗</div><strong>Your results will appear here</strong><span>Choose your
-                settings, then select “Show example results.”</span>
+              <div class="placeholder-ring">↗</div><strong>Your score will appear here</strong><span>Choose your
+                settings, then select “Show guide score.”</span>
             </div>
             <div class="result-content" id="result-content" hidden>
               <div class="result-score-row">
-                <div><span class="result-label">Example check score · 0 to 100</span>
+                <div><span class="result-label">Guide score · 0 to 100</span>
                   <div class="result-score"><span id="risk-score">—</span><small>/ 100</small></div>
                 </div><span class="risk-badge" id="risk-badge">—</span>
               </div>
-              <p class="score-guide">A higher score means more of your chosen values crossed this example guide’s flags.
+              <p class="score-guide">A higher score means more of your chosen values crossed the guide's flags.
                 It is not a chance of crop loss.</p>
               <div class="risk-meter"><span id="risk-meter-fill"></span></div>
               <p class="result-summary" id="result-summary"></p>
@@ -409,30 +401,81 @@
               <div class="result-meta"><span>Crop and year</span><strong id="result-crop"></strong></div>
               <div class="result-meta result-inputs-row"><span>Values you chose</span><strong class="result-inputs"
                   id="result-inputs"></strong></div>
-              <div class="result-caveat"><span>i</span> This simple example is not a real forecast, crop diagnosis, or
-                result from the research model.</div>
+              <div class="result-caveat"><span>i</span> This guide score is not a forecast, crop diagnosis, or result
+                from the research model.</div>
               <div class="result-actions"><button type="button" id="save-scenario" class="secondary-button">＋ Save this
-                  example</button><button type="button" id="export-scenario" class="secondary-button">↓ Download as
+                  scenario</button><button type="button" id="export-scenario" class="secondary-button">↓ Download as
                   CSV</button></div>
             </div>
           </aside>
+        </section>
+
+        <section class="weather-data-section" id="weather-data">
+          <div class="weather-data-heading">
+            <div>
+              <div class="section-kicker">HISTORICAL WEATHER</div>
+              <h2>Look up weather by place</h2>
+              <p>Search a town, county, or region, then choose a match to load the selected year.</p>
+            </div>
+          </div>
+          <form class="weather-search-form" id="weather-search-form">
+            <label for="weather-place">Place</label>
+            <input id="weather-place" name="place" type="search" required maxlength="100"
+              placeholder="For example, Ames, Iowa" autocomplete="off">
+            <button type="submit" class="secondary-button" id="search-weather">Find places</button>
+          </form>
+          <div class="weather-place-choice" id="weather-place-choice" hidden>
+            <label for="weather-place-results">Choose the matching place</label>
+            <select id="weather-place-results"></select>
+            <button type="button" class="analyze-button" id="load-weather">Load selected year</button>
+          </div>
+          <p class="weather-status" id="weather-status" role="status" aria-live="polite">
+            Select a year in the scenario form, then search for a place. An internet connection is required.
+          </p>
+          <div class="weather-results" id="weather-results" hidden>
+            <div class="weather-results-heading">
+              <h3 id="weather-location-label"></h3>
+              <span id="weather-year-label"></span>
+            </div>
+            <div class="weather-table-scroll">
+              <table class="weather-table">
+                <thead>
+                  <tr>
+                    <th>Month</th>
+                    <th>Mean temp. °C</th>
+                    <th>Rain mm</th>
+                    <th>Humidity %</th>
+                    <th>Wind km/h</th>
+                    <th>Sunlight W/m²</th>
+                    <th>Soil temp. °C</th>
+                    <th>Soil moisture m³/m³</th>
+                  </tr>
+                </thead>
+                <tbody id="weather-months"></tbody>
+              </table>
+            </div>
+            <p class="weather-attribution">Source: <a href="https://open-meteo.com/" target="_blank"
+                rel="noreferrer">Open-Meteo Historical Weather API</a> (ERA5-Seamless reanalysis). These are gridded
+              estimates, not measurements from a specific farm. The lookup is displayed separately and does not
+              change the guide score or notebook model results.</p>
+          </div>
         </section>
 
         <section class="field-log-section" id="field-log">
           <div class="field-log-heading">
             <div>
               <div class="section-kicker">SAVED ON THIS DEVICE</div>
-              <h2>Your saved examples</h2>
+              <h2>Your saved scenarios</h2>
               <p>These stay in this browser. Choose up to two to compare.</p>
             </div>
             <div class="field-log-tools"><span class="saved-count" id="saved-count">0 saved</span><button type="button"
                 class="secondary-button" id="export-log">↓ Download all</button></div>
           </div>
-          <div class="field-log-empty" id="field-log-empty">No saved examples yet. Run an example and select
-            <strong>Save this example</strong>.</div>
+          <div class="field-log-empty" id="field-log-empty">No saved scenarios yet. Try one and select
+            <strong>Save this scenario</strong>.</div>
           <div class="scenario-list" id="scenario-list"></div>
           <div class="comparison-panel" id="comparison-panel" hidden aria-live="polite">
-            <div class="comparison-heading"><strong>Compare your examples</strong><button type="button"
+            <div class="comparison-heading"><strong>Compare scenarios</strong><button type="button"
                 id="clear-comparison" class="text-button">Clear selection</button></div>
             <div class="comparison-results" id="comparison-results"></div>
           </div>
@@ -444,8 +487,8 @@
               <div class="section-kicker">HOW THE RESEARCH WORKS</div>
               <h2>Pictures + weather + crop records.</h2>
             </div>
-            <p>The notebook combines satellite pictures and weather history to study crop yields. In this website, the
-              research model itself is not running.</p>
+            <p>The research model is designed to combine satellite pictures, weather and crop records. This website
+              does not connect to those data or run the model.</p>
           </div>
           <div class="method-cards">
             <article><span class="method-icon">▦</span><span class="method-index">01 / PICTURES</span>
@@ -460,16 +503,15 @@
             </article>
             <article><span class="method-icon">✳</span><span class="method-index">03 / RESULTS</span>
               <h3>Estimates yield groups and values</h3>
-              <p>The research model groups yields as low, medium, or high, and also estimates a yield value.</p><span
-                class="method-tag">Compared with a second method</span>
+              <p>The research model groups yields as low, medium or high, and also estimates a yield value.</p><span
+                class="method-tag">Compared with XGBoost</span>
             </article>
           </div>
-          <div class="method-footer"><span><i></i> Notebook test: soybeans only</span><span>Weather data is not
-              connected to this website</span><span>Real-data support is still in progress</span></div>
+          <div class="method-footer"><span><i></i> Notebook run: soybeans only</span></div>
           <div class="data-scope">
-            <div><span class="section-kicker">WHAT THE NOTEBOOK TESTED</span><strong>Soybeans · 2018–2022 · 10 counties
-                · 300 made-up examples</strong><small>The test results use computer-generated examples, not real crop or
-                weather records.</small></div>
+            <div><span class="section-kicker">NOTEBOOK DATA</span><strong>Soybeans · 2018–2022 · 10 counties · 300
+                synthetic samples</strong><small>The samples were generated for the experiment; they are not observed
+                crop or weather records.</small></div>
             <div class="split-counts"><span><b>192</b> for learning</span><span><b>48</b> for
                 tuning</span><span><b>60</b> for testing</span></div>
           </div>
@@ -478,13 +520,13 @@
               aria-hidden="true"><svg viewBox="0 0 32 32">
                 <path d="M25.7 5.4C15 5.7 7.2 9.3 7.2 17.4c0 3.9 2.7 6.4 6.2 6.4 7.6 0 12-8.1 12.3-18.4Z" />
                 <path d="M5.2 27.1c4-7.7 9.1-12.4 16.4-16.2" />
-              </svg></span><span class="brand-name">crop<span>net</span></span></a><span>A learning demo about crops,
+              </svg></span><span class="brand-name">crop<span>net</span></span></a><span>A project preview about crops,
             weather, and yield.</span><a href="#overview">Back to top ↑</a></footer>
       </div>
     </main>
   </div>
   <div class="toast" id="toast" role="status"></div>
-  <script src="app.js"></script>
+  <script src="app.js?v=weather-history-2"></script>
 </body>
 
 </html>
