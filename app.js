@@ -42,6 +42,218 @@ function updateRangeLabels() {
   document.querySelector("#soil-moisture-value").textContent = `${formatSigned(parameterInputs.soilMoisture.value)}%`;
 }
 
+const weatherSearchForm = document.querySelector("#weather-search-form");
+const weatherPlaceInput = document.querySelector("#weather-place");
+const weatherPlaceChoice = document.querySelector("#weather-place-choice");
+const weatherPlaceResults = document.querySelector("#weather-place-results");
+const weatherStatus = document.querySelector("#weather-status");
+const weatherResults = document.querySelector("#weather-results");
+const weatherSearchButton = document.querySelector("#search-weather");
+const weatherLoadButton = document.querySelector("#load-weather");
+const weatherYearSelect = document.querySelector("#year");
+let weatherLocations = [];
+let weatherRequestController;
+
+function setWeatherStatus(message, isError = false) {
+  weatherStatus.textContent = message;
+  weatherStatus.classList.toggle("error", isError);
+}
+
+function startWeatherRequest() {
+  weatherRequestController?.abort();
+  weatherRequestController = new AbortController();
+  weatherSearchButton.disabled = true;
+  weatherLoadButton.disabled = true;
+  return weatherRequestController;
+}
+
+function finishWeatherRequest(controller) {
+  if (weatherRequestController !== controller) return;
+  weatherRequestController = undefined;
+  weatherSearchButton.disabled = false;
+  weatherLoadButton.disabled = weatherLocations.length === 0;
+}
+
+weatherSearchForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const place = weatherPlaceInput.value.trim();
+  if (!place) return;
+
+  const controller = startWeatherRequest();
+  weatherResults.hidden = true;
+  weatherPlaceChoice.hidden = true;
+  weatherLocations = [];
+  weatherLoadButton.disabled = true;
+  setWeatherStatus("Searching for places...");
+
+  try {
+    const url = new URL("https://geocoding-api.open-meteo.com/v1/search");
+    url.search = new URLSearchParams({
+      name: place,
+      count: "5",
+      language: "en",
+      format: "json"
+    });
+    const response = await fetch(url, { signal: controller.signal });
+    if (!response.ok) throw new Error(`Place search failed (${response.status}).`);
+
+    const payload = await response.json();
+    weatherLocations = Array.isArray(payload.results)
+      ? payload.results.filter((location) =>
+        Number.isFinite(location.latitude) &&
+        Number.isFinite(location.longitude) &&
+        typeof location.name === "string"
+      )
+      : [];
+    if (!weatherLocations.length) {
+      setWeatherStatus("No matching places found. Try adding a state, province, or country.");
+      return;
+    }
+
+    weatherPlaceResults.replaceChildren(...weatherLocations.map((location, index) => {
+      const details = [location.admin1, location.country].filter(Boolean).join(", ");
+      return new Option(details ? `${location.name}, ${details}` : location.name, String(index));
+    }));
+    weatherPlaceChoice.hidden = false;
+    setWeatherStatus(`Found ${weatherLocations.length} location${weatherLocations.length === 1 ? "" : "s"}. Choose the right one, then load ${weatherYearSelect.value}.`);
+  } catch (error) {
+    if (error.name === "AbortError") return;
+    console.error("Unable to search for a weather location.", error);
+    setWeatherStatus(error.message || "Could not search for places. Check your connection and try again.", true);
+  } finally {
+    finishWeatherRequest(controller);
+  }
+});
+
+weatherLoadButton.addEventListener("click", async () => {
+  const location = weatherLocations[Number(weatherPlaceResults.value)];
+  if (!location) {
+    setWeatherStatus("Search for a place and choose a location first.", true);
+    return;
+  }
+
+  const year = weatherYearSelect.value;
+  const controller = startWeatherRequest();
+  setWeatherStatus(`Loading historical weather for ${location.name}...`);
+
+  try {
+    const url = new URL("https://archive-api.open-meteo.com/v1/archive");
+    url.search = new URLSearchParams({
+      latitude: String(location.latitude),
+      longitude: String(location.longitude),
+      start_date: `${year}-01-01`,
+      end_date: `${year}-12-31`,
+      hourly: [
+        "temperature_2m",
+        "relative_humidity_2m",
+        "precipitation",
+        "wind_speed_10m",
+        "shortwave_radiation",
+        "soil_temperature_0_to_7cm",
+        "soil_moisture_0_to_7cm"
+      ].join(","),
+      wind_speed_unit: "kmh",
+      temperature_unit: "celsius",
+      precipitation_unit: "mm",
+      timezone: "auto",
+      models: "era5_seamless"
+    });
+    const response = await fetch(url, { signal: controller.signal });
+    if (!response.ok) throw new Error(`Weather request failed (${response.status}).`);
+
+    const payload = await response.json();
+    const hourly = payload.hourly;
+    if (!hourly || !Array.isArray(hourly.time) || hourly.time.length === 0) {
+      throw new Error("The weather service returned no records for this place and year.");
+    }
+
+    const fields = [
+      ["temperature_2m", "temperature"],
+      ["relative_humidity_2m", "humidity"],
+      ["precipitation", "precipitation"],
+      ["wind_speed_10m", "wind"],
+      ["shortwave_radiation", "sunlight"],
+      ["soil_temperature_0_to_7cm", "soilTemperature"],
+      ["soil_moisture_0_to_7cm", "soilMoisture"]
+    ];
+    for (const [apiField] of fields) {
+      if (!Array.isArray(hourly[apiField]) || hourly[apiField].length !== hourly.time.length) {
+        throw new Error(`The weather service returned incomplete ${apiField} data.`);
+      }
+    }
+
+    const months = Array.from({ length: 12 }, () =>
+      Object.fromEntries(fields.map(([, key]) => [key, { sum: 0, count: 0 }]))
+    );
+    hourly.time.forEach((time, index) => {
+      if (typeof time !== "string" || !time.startsWith(`${year}-`)) return;
+      const monthIndex = Number(time.slice(5, 7)) - 1;
+      if (!Number.isInteger(monthIndex) || monthIndex < 0 || monthIndex >= 12) return;
+      fields.forEach(([apiField, key]) => {
+        const value = hourly[apiField][index];
+        if (!Number.isFinite(value)) return;
+        months[monthIndex][key].sum += value;
+        months[monthIndex][key].count += 1;
+      });
+    });
+
+    const monthFormatter = new Intl.DateTimeFormat("en", { month: "long", timeZone: "UTC" });
+    const average = (stat, digits = 1) => stat.count ? (stat.sum / stat.count).toFixed(digits) : "—";
+    const rows = months.map((month, index) => {
+      const row = document.createElement("tr");
+      const values = [
+        monthFormatter.format(new Date(Date.UTC(2020, index, 1))),
+        average(month.temperature),
+        month.precipitation.count ? month.precipitation.sum.toFixed(1) : "—",
+        average(month.humidity),
+        average(month.wind),
+        average(month.sunlight),
+        average(month.soilTemperature),
+        average(month.soilMoisture, 3)
+      ];
+      values.forEach((value, valueIndex) => {
+        const cell = document.createElement(valueIndex === 0 ? "th" : "td");
+        if (valueIndex === 0) cell.scope = "row";
+        cell.textContent = value;
+        row.append(cell);
+      });
+      return row;
+    });
+
+    document.querySelector("#weather-months").replaceChildren(...rows);
+    document.querySelector("#weather-location-label").textContent =
+      [location.name, location.admin1, location.country].filter(Boolean).join(", ");
+    document.querySelector("#weather-year-label").textContent = year;
+    weatherResults.hidden = false;
+    setWeatherStatus(`Loaded monthly historical estimates for ${location.name} in ${year}. Rain is a monthly total; other values are monthly averages.`);
+  } catch (error) {
+    if (error.name === "AbortError") return;
+    console.error("Unable to load historical weather.", error);
+    setWeatherStatus(error.message || "Could not load historical weather. Check your connection and try again.", true);
+  } finally {
+    finishWeatherRequest(controller);
+  }
+});
+
+weatherYearSelect.addEventListener("change", () => {
+  if (weatherRequestController) {
+    weatherRequestController.abort();
+    weatherRequestController = undefined;
+    weatherSearchButton.disabled = false;
+    weatherLoadButton.disabled = weatherLocations.length === 0;
+  }
+  weatherResults.hidden = true;
+  setWeatherStatus(weatherLocations.length
+    ? `Year changed to ${weatherYearSelect.value}. Choose a place and load the selected year.`
+    : `Year changed to ${weatherYearSelect.value}. Search for a place, then load the selected year.`);
+});
+
+const initialWeatherPlace = new URLSearchParams(window.location.search).get("place");
+if (initialWeatherPlace) {
+  weatherPlaceInput.value = initialWeatherPlace;
+  weatherSearchForm.requestSubmit();
+}
+
 Object.values(parameterInputs).forEach((input) => input.addEventListener("input", updateRangeLabels));
 document.querySelectorAll(".preset-button").forEach((button) => {
   button.addEventListener("click", () => {
